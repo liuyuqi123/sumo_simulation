@@ -7,11 +7,19 @@ import numpy
 
 
 # we need to import python modules from the $SUMO_HOME/tools directory
-try:
-    sys.path.append("/home/gustavo/Downloads/sumo-1.3.1/tools")
-    from sumolib import checkBinary
-except ImportError:
-    sys.exit("please declare environment variable 'SUMO_HOME' as the root directory of your sumo installation (it should contain folders 'bin', 'tools' and 'docs')")       
+# try:
+#     sys.path.append("/home/gustavo/Downloads/sumo-1.3.1/tools")
+#     from sumolib import checkBinary
+# except ImportError:
+#     sys.exit("please declare environment variable 'SUMO_HOME' as the root directory of your sumo installation (it should contain folders 'bin', 'tools' and 'docs')")
+
+if 'SUMO_HOME' in os.environ:
+    tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
+    sys.path.append(tools)
+else:
+    sys.exit("Please declare the environment variable 'SUMO_HOME'")
+
+from sumolib import checkBinary
 import traci
 
 #functions to calculate the distance between 2 cars
